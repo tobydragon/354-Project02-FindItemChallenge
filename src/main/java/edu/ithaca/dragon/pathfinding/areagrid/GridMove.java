@@ -19,8 +19,8 @@ public enum GridMove {
     
     NO_MOVE(0,0);
 
-    private final int x;
-    private final int y;
+    public final int x;
+    public final int y;
     
     private GridMove(int x, int y){
         this.x = x;
@@ -66,9 +66,18 @@ public enum GridMove {
         }
         return n;
     }
+    
 
     public static List<Location> calcValidMainNeighbors(List<? extends List<Location>> grid,  Location current, int numColumns, int numRows) {
         return calcAllValidNeighborsFromMoves(grid, current, MAIN_DIRECTIONS, numColumns, numRows);
+    }
+
+    public static List<Location> calcValidNeighbors(List<? extends List<Location>> grid,  Location current) {
+        List<Location> n = new ArrayList<Location>();
+        for (GridMove move : MAIN_DIRECTIONS) {
+            n.add( grid.get(current.getX() + move.x).get(current.getY() + move.y));
+        }
+        return n;
     }
 
     public static List<Location> calcValidDoubleNeighbors(List<? extends List<Location>> grid,  Location current, int numColumns, int numRows) {

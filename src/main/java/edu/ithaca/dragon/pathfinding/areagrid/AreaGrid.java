@@ -65,7 +65,10 @@ public class AreaGrid {
 
     //@returns copies of the location and its surroundings 
     public LocalSensor createLocalSensor(Location location){
-        List<Location> refs = GridMove.calcValidMainNeighbors(grid, location, getColumnCount(), getRowCount());
+        List<Location> refs = new ArrayList<Location>();
+        for (GridMove move : GridMove.MAIN_DIRECTIONS) {
+            refs.add( grid.get(location.getX() + move.x).get(location.getY() + move.y));
+        }
         List<Location> copies = refs.stream().map((neighbor)-> new Location(neighbor)).collect(Collectors.toList());
         return new LocalSensor(new Location(location), copies);
     }
